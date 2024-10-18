@@ -1,15 +1,15 @@
 import React from 'react'
-import { SafeAreaView } from 'react-native'
-import Header from './src/components/Header'
 import { ThemeProvider } from 'styled-components'
 import { theme } from './src/theme/theme'
+import { NavigationContainer } from '@react-navigation/native'
+import AppNavigator from './src/navigation/AppNavigator'
 
 function App(): React.JSX.Element {
   return (
     <ThemeProvider theme={theme}>
-      <SafeAreaView>
-        <Header />
-      </SafeAreaView>
+      <NavigationContainer>
+        <AppNavigator />
+      </NavigationContainer>
     </ThemeProvider>
   )
 }

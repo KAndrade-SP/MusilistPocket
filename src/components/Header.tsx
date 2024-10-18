@@ -1,5 +1,11 @@
-import { IconFilter, IconMenuDeep, IconMusicSearch } from '@tabler/icons-react-native'
-import React from 'react'
+import { DrawerNavigationProp } from '@react-navigation/drawer/lib/typescript/src/types'
+import { useFocusEffect, useNavigation } from '@react-navigation/native'
+import {
+  IconFilter,
+  IconMenuDeep,
+  IconMusicSearch,
+} from '@tabler/icons-react-native'
+import React, { useState } from 'react'
 import { StyleSheet, TouchableOpacity, View } from 'react-native'
 import styled, { useTheme } from 'styled-components/native'
 
@@ -53,9 +59,19 @@ const SearchIcon = styled(IconMusicSearch)`
   `}
 `
 
-const Header = () => {
+type DrawerNavigation = DrawerNavigationProp<any>
 
+const Header = () => {
   const theme = useTheme()
+  const navigation = useNavigation<DrawerNavigation>()
+  const [subtitle, setSubtitle] = useState<string>('Subtitle')
+
+  useFocusEffect(
+    React.useCallback(() => {
+      const routeName = navigation.getState().routes[navigation.getState().index].name
+      setSubtitle(routeName)
+    }, [navigation])
+  )
 
   const styles = StyleSheet.create({
     navContainer: {
@@ -75,12 +91,12 @@ const Header = () => {
   return (
     <HeaderContainer>
       <View style={styles.navContainer}>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.toggleDrawer()}>
           <MenuIcon />
         </TouchableOpacity>
         <View style={styles.titleContainer}>
           <HeaderTitle>Title</HeaderTitle>
-          <HeaderSubtitle>Subtitle</HeaderSubtitle>
+          <HeaderSubtitle>{subtitle}</HeaderSubtitle>
         </View>
       </View>
 
