@@ -5,7 +5,7 @@ import {
   IconMenuDeep,
   IconMusicSearch,
 } from '@tabler/icons-react-native'
-import React, { useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import { StyleSheet, TouchableOpacity, View } from 'react-native'
 import styled, { useTheme } from 'styled-components/native'
 
@@ -67,7 +67,7 @@ const Header = () => {
   const [subtitle, setSubtitle] = useState<string>('Subtitle')
 
   useFocusEffect(
-    React.useCallback(() => {
+    useCallback(() => {
       const routeName = navigation.getState().routes[navigation.getState().index].name
       setSubtitle(routeName)
     }, [navigation])
@@ -81,6 +81,7 @@ const Header = () => {
     },
     titleContainer: {
       flexDirection: 'column',
+      gap: theme.spacing.xss,
     },
     iconContainer: {
       flexDirection: 'row',
@@ -95,7 +96,7 @@ const Header = () => {
           <MenuIcon />
         </TouchableOpacity>
         <View style={styles.titleContainer}>
-          <HeaderTitle>Title</HeaderTitle>
+          <HeaderTitle>Song list</HeaderTitle>
           <HeaderSubtitle>{subtitle}</HeaderSubtitle>
         </View>
       </View>
