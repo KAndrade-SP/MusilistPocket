@@ -7,8 +7,8 @@ import {
 import { useTheme } from 'styled-components'
 
 const CustomDrawerContent = (props: any) => {
-
   const theme = useTheme()
+  const { navigation } = props
 
   const styles = StyleSheet.create({
     container: {
@@ -42,10 +42,16 @@ const CustomDrawerContent = (props: any) => {
       contentContainerStyle={styles.container}
     >
       <View style={styles.header}>
-        <Image
-          source={{ uri: 'https://via.placeholder.com/80' }}
-          style={styles.userImage}
-        />
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate('Profile')
+          }}
+        >
+          <Image
+            source={{ uri: 'https://via.placeholder.com/80' }}
+            style={styles.userImage}
+          />
+        </TouchableOpacity>
         <Text style={styles.userName}>John Doe</Text>
       </View>
 

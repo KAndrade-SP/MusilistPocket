@@ -68,7 +68,8 @@ const Header = () => {
 
   useFocusEffect(
     useCallback(() => {
-      const routeName = navigation.getState().routes[navigation.getState().index].name
+      const routeName =
+        navigation.getState().routes[navigation.getState().index].name
       setSubtitle(routeName)
     }, [navigation])
   )
@@ -105,7 +106,11 @@ const Header = () => {
         <TouchableOpacity>
           <FilterIcon />
         </TouchableOpacity>
-        <TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate('Search')
+          }}
+        >
           <SearchIcon />
         </TouchableOpacity>
       </View>
