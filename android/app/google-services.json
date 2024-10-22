@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "139976854129",
+    "project_id": "musilist-f6f55",
+    "storage_bucket": "musilist-f6f55.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:139976854129:android:b2073cd6b0f4830a1de9d0",
+        "android_client_info": {
+          "package_name": "com.musilistpocket"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "139976854129-ph3qf66ptsb4a6knv0j2fq2cvhoqrfaq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAz8NJC73CnOEho1ekJg6VCXVW5_wvBdjc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "139976854129-ph3qf66ptsb4a6knv0j2fq2cvhoqrfaq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -19,6 +19,7 @@ import {
 } from '@tabler/icons-react-native'
 import SearchScreen from '../screens/SearchScreen.tsx/SearchScreen'
 import ProfileScreen from '../screens/ProfileScreen/ProfileScreen'
+import SignInScreen from '../screens/SignInScreen/SignInScreen'
 
 const Drawer = createDrawerNavigator()
 const Stack = createStackNavigator()
@@ -68,6 +69,7 @@ const DrawerNavigator = () => {
       <Drawer.Screen name="Completed" component={CompletedScreen} />
       <Drawer.Screen name="Planning" component={PlanningScreen} />
       <Drawer.Screen name="Dropped" component={DroppedScreen} />
+      <Drawer.Screen name="SignIn" component={SignInScreen} />
     </Drawer.Navigator>
   )
 }

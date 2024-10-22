@@ -3,14 +3,18 @@ import { ThemeProvider } from 'styled-components'
 import { theme } from './src/theme/theme'
 import { NavigationContainer } from '@react-navigation/native'
 import AppNavigator from './src/navigation/AppNavigator'
+import { Provider } from 'react-redux'
+import { store } from './src/redux/store'
 
 function App(): React.JSX.Element {
   return (
-    <ThemeProvider theme={theme}>
-      <NavigationContainer>
-        <AppNavigator />
-      </NavigationContainer>
-    </ThemeProvider>
+    <Provider store={store}>
+      <ThemeProvider theme={theme}>
+        <NavigationContainer>
+          <AppNavigator />
+        </NavigationContainer>
+      </ThemeProvider>
+    </Provider>
   )
 }
 
