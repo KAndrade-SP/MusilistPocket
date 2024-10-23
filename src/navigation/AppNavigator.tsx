@@ -1,15 +1,17 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
-import { StyleSheet, TouchableOpacity, View } from 'react-native'
+import { useDispatch, useSelector } from 'react-redux'
+import { AppDispatch, RootState } from '../redux/store'
+import auth from '@react-native-firebase/auth'
+import { setUser } from '../redux/reducers/authSlice'
+import { RootStackParamList } from '../types/RootStackParamList'
 import { createDrawerNavigator } from '@react-navigation/drawer'
 import { createStackNavigator } from '@react-navigation/stack'
 import CustomDrawerContent from './CustomDrawerContent'
+
 import { useTheme } from 'styled-components'
 
-import Header from '../components/Header'
-import CompletedScreen from '../screens/CompletedScreen/CompletedScreen'
-import PlanningScreen from '../screens/PlanningScreen/PlanningScreen'
-import DroppedScreen from '../screens/DroppedScreen/DroppedScreen'
 import {
   IconAlertCircle,
   IconArrowBackUp,
@@ -17,12 +19,17 @@ import {
   IconMusicCheck,
   IconVolumeOff,
 } from '@tabler/icons-react-native'
+
+import Header from '../components/Header'
+import CompletedScreen from '../screens/CompletedScreen/CompletedScreen'
+import PlanningScreen from '../screens/PlanningScreen/PlanningScreen'
+import DroppedScreen from '../screens/DroppedScreen/DroppedScreen'
 import SearchScreen from '../screens/SearchScreen.tsx/SearchScreen'
 import ProfileScreen from '../screens/ProfileScreen/ProfileScreen'
 import SignInScreen from '../screens/SignInScreen/SignInScreen'
 
 const Drawer = createDrawerNavigator()
-const Stack = createStackNavigator()
+const Stack = createStackNavigator<RootStackParamList>()
 
 const styles = StyleSheet.create({
   headerLeftContainer: {
@@ -69,7 +76,6 @@ const DrawerNavigator = () => {
       <Drawer.Screen name="Completed" component={CompletedScreen} />
       <Drawer.Screen name="Planning" component={PlanningScreen} />
       <Drawer.Screen name="Dropped" component={DroppedScreen} />
-      <Drawer.Screen name="SignIn" component={SignInScreen} />
     </Drawer.Navigator>
   )
 }
@@ -78,59 +84,104 @@ const MainStackNavigator = () => {
   const theme = useTheme()
   const navigation = useNavigation()
 
+  const { user } = useSelector((state: RootState) => state.auth)
+  const dispatch = useDispatch<AppDispatch>()
+  const initializing = useSelector(
+    (state: RootState) => state.auth.initializing
+  )
+
+  useEffect(() => {
+    const unsubscribe = auth().onAuthStateChanged(user => {
+      if (user) {
+        dispatch(
+          setUser({
+            uid: user.uid,
+            displayName: user.displayName,
+            email: user.email,
+            photoURL: user.photoURL,
+          })
+        )
+      } else {
+        dispatch(setUser(null))
+      }
+    })
+
+    return () => unsubscribe()
+  }, [dispatch])
+
+  if (initializing) {
+    return <Text>Loading...</Text>
+  }
+
   return (
     <Stack.Navigator>
-      <Stack.Screen
-        name="Drawer"
-        component={DrawerNavigator}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="Search"
-        component={SearchScreen}
-        options={{
-          title: 'Search',
-          headerLeft: () => (
-            <View style={styles.headerLeftContainer}>
-              <TouchableOpacity onPress={() => navigation.goBack()}>
-                <IconArrowBackUp size={24} color={theme.colors.lightPurple} />
-              </TouchableOpacity>
-            </View>
-          ),
-          headerStyle: {
-            backgroundColor: theme.colors.grayBackground,
-            height: 70,
-          },
-          headerTitleStyle: {
-            fontFamily: theme.typography.fonts.bold,
-            fontSize: theme.typography.fontSize.large,
-          },
-          headerTintColor: theme.colors.lightPurple,
-        }}
-      />
-      <Stack.Screen
-        name="Profile"
-        component={ProfileScreen}
-        options={{
-          title: 'Profile',
-          headerLeft: () => (
-            <View style={styles.headerLeftContainer}>
-              <TouchableOpacity onPress={() => navigation.goBack()}>
-                <IconArrowBackUp size={24} color={theme.colors.lightPurple} />
-              </TouchableOpacity>
-            </View>
-          ),
-          headerStyle: {
-            backgroundColor: theme.colors.grayBackground,
-            height: 70,
-          },
-          headerTitleStyle: {
-            fontFamily: theme.typography.fonts.bold,
-            fontSize: theme.typography.fontSize.large,
-          },
-          headerTintColor: theme.colors.lightPurple,
-        }}
-      />
+      {user ? (
+        <>
+          <Stack.Screen
+            name="Main"
+            component={DrawerNavigator}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="Search"
+            component={SearchScreen}
+            options={{
+              title: 'Search',
+              headerLeft: () => (
+                <View style={styles.headerLeftContainer}>
+                  <TouchableOpacity onPress={() => navigation.goBack()}>
+                    <IconArrowBackUp
+                      size={24}
+                      color={theme.colors.lightPurple}
+                    />
+                  </TouchableOpacity>
+                </View>
+              ),
+              headerStyle: {
+                backgroundColor: theme.colors.grayBackground,
+                height: 70,
+              },
+              headerTitleStyle: {
+                fontFamily: theme.typography.fonts.bold,
+                fontSize: theme.typography.fontSize.large,
+              },
+              headerTintColor: theme.colors.lightPurple,
+            }}
+          />
+          <Stack.Screen
+            name="Profile"
+            component={ProfileScreen}
+            options={{
+              title: 'Profile',
+              headerLeft: () => (
+                <View style={styles.headerLeftContainer}>
+                  <TouchableOpacity onPress={() => navigation.goBack()}>
+                    <IconArrowBackUp
+                      size={24}
+                      color={theme.colors.lightPurple}
+                    />
+                  </TouchableOpacity>
+                </View>
+              ),
+              headerStyle: {
+                backgroundColor: theme.colors.grayBackground,
+                height: 70,
+              },
+              headerTitleStyle: {
+                fontFamily: theme.typography.fonts.bold,
+                fontSize: theme.typography.fontSize.large,
+              },
+              headerTintColor: theme.colors.lightPurple,
+            }}
+          />
+        </>
+      ) : (
+        <Stack.Screen
+          name="SignIn"
+          component={SignInScreen}
+          options={{ headerShown: false }}
+        />
+      )}
     </Stack.Navigator>
   )
 }

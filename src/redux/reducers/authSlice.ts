@@ -14,9 +14,9 @@ export const loginWithGoogle = createAsyncThunk(
   'auth/loginWithGoogle',
   async (_, { rejectWithValue }) => {
     try {
+
       await GoogleSignin.hasPlayServices()
       const userInfo = await GoogleSignin.signIn()
-
       const idToken = userInfo.data?.idToken
 
       if (!idToken) {
@@ -43,7 +43,7 @@ export const logout = createAsyncThunk(
   'auth/logout',
   async (_, { rejectWithValue }) => {
     try {
-      await auth().signOut()
+      await GoogleSignin.signOut()
       return null
     } catch (error: any) {
       return rejectWithValue(error.message)

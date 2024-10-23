@@ -1,10 +1,13 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Button, View, Text } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
-import { loginWithGoogle, logout } from '../../redux/reducers/authSlice'
+import { loginWithGoogle } from '../../redux/reducers/authSlice'
 import { AppDispatch, RootState } from '../../redux/store'
+import { useNavigation } from '@react-navigation/native'
+import { NavigationProp } from '../../types/RootStackParamList'
 
 const SignInScreen = () => {
+  
   const dispatch = useDispatch<AppDispatch>()
   const { user, loading, error } = useSelector((state: RootState) => state.auth)
 
@@ -12,24 +15,22 @@ const SignInScreen = () => {
     dispatch(loginWithGoogle())
   }
 
-  const handleLogOut = () => {
-    dispatch(logout())
-  }
+  const navigation = useNavigation<NavigationProp>()
+
+  useEffect(() => {
+    if (user) {
+      navigation.navigate('Main')
+    }
+  }, [user, navigation])
 
   return (
-    <View>
-      {user ? (
-        <View>
-          <Text>Welcome, {user.displayName}</Text>
-          <Button title="Sair" onPress={handleLogOut} />
-        </View>
-      ) : (
-        <Button
-          title="Sign in with Google"
-          onPress={handleGoogleLogin}
-          disabled={loading}
-        />
-      )}
+    <View style={{ backgroundColor: 'black' }}>
+      <Button
+        title="Sign in with Google"
+        onPress={handleGoogleLogin}
+        disabled={loading}
+      />
+
       {loading && <Text>Loading...</Text>}
       {error && <Text>Error: {error}</Text>}
     </View>
