@@ -38,24 +38,18 @@ const HeaderSubtitle = styled.Text`
 const MenuIcon = styled(IconMenuDeep)`
   ${({ theme: { colors } }) => `
     color: ${colors.lightPurple};
-    width: 24px;
-    height: 24px;
   `}
 `
 
 const FilterIcon = styled(IconFilter)`
   ${({ theme: { colors } }) => `
     color: ${colors.lightPurple};
-    width: 24px;
-    height: 24px;
   `}
 `
 
 const SearchIcon = styled(IconMusicSearch)`
   ${({ theme: { colors } }) => `
     color: ${colors.lightPurple};
-    width: 24px;
-    height: 24px;
   `}
 `
 
@@ -94,7 +88,7 @@ const Header = () => {
     <HeaderContainer>
       <View style={styles.navContainer}>
         <TouchableOpacity onPress={() => navigation.toggleDrawer()}>
-          <MenuIcon />
+          <MenuIcon size={30}/>
         </TouchableOpacity>
         <View style={styles.titleContainer}>
           <HeaderTitle>Song list</HeaderTitle>
@@ -104,14 +98,14 @@ const Header = () => {
 
       <View style={styles.iconContainer}>
         <TouchableOpacity>
-          <FilterIcon />
+          <FilterIcon size={30} />
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => {
             navigation.navigate('Search')
           }}
         >
-          <SearchIcon />
+          <SearchIcon size={30}/>
         </TouchableOpacity>
       </View>
     </HeaderContainer>

@@ -4,7 +4,7 @@ import { useNavigation } from '@react-navigation/native'
 import { useDispatch, useSelector } from 'react-redux'
 import { AppDispatch, RootState } from '../redux/store'
 import auth from '@react-native-firebase/auth'
-import { setUser } from '../redux/reducers/authSlice'
+import { logout, setUser } from '../redux/reducers/authSlice'
 import { RootStackParamList } from '../types/RootStackParamList'
 import { createDrawerNavigator } from '@react-navigation/drawer'
 import { createStackNavigator } from '@react-navigation/stack'
@@ -16,6 +16,7 @@ import {
   IconAlertCircle,
   IconArrowBackUp,
   IconClipboardList,
+  IconLogout,
   IconMusicCheck,
   IconVolumeOff,
 } from '@tabler/icons-react-native'
@@ -34,6 +35,11 @@ const Stack = createStackNavigator<RootStackParamList>()
 const styles = StyleSheet.create({
   headerLeftContainer: {
     marginLeft: 16,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  headerRightContainer: {
+    marginRight: 16,
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -86,9 +92,11 @@ const MainStackNavigator = () => {
 
   const { user } = useSelector((state: RootState) => state.auth)
   const dispatch = useDispatch<AppDispatch>()
-  const initializing = useSelector(
-    (state: RootState) => state.auth.initializing
-  )
+  const initializing = useSelector((state: RootState) => state.auth.initializing)
+
+  const handleLogout = () => {
+    dispatch(logout())
+  }
 
   useEffect(() => {
     const unsubscribe = auth().onAuthStateChanged(user => {
@@ -117,11 +125,7 @@ const MainStackNavigator = () => {
     <Stack.Navigator>
       {user ? (
         <>
-          <Stack.Screen
-            name="Main"
-            component={DrawerNavigator}
-            options={{ headerShown: false }}
-          />
+          <Stack.Screen name="Main" component={DrawerNavigator} options={{ headerShown: false }} />
           <Stack.Screen
             name="Search"
             component={SearchScreen}
@@ -130,16 +134,15 @@ const MainStackNavigator = () => {
               headerLeft: () => (
                 <View style={styles.headerLeftContainer}>
                   <TouchableOpacity onPress={() => navigation.goBack()}>
-                    <IconArrowBackUp
-                      size={24}
-                      color={theme.colors.lightPurple}
-                    />
+                    <IconArrowBackUp size={30} color={theme.colors.lightPurple} />
                   </TouchableOpacity>
                 </View>
               ),
               headerStyle: {
                 backgroundColor: theme.colors.grayBackground,
                 height: 70,
+                shadowColor: 'transparent',
+                elevation: 0,
               },
               headerTitleStyle: {
                 fontFamily: theme.typography.fonts.bold,
@@ -156,16 +159,22 @@ const MainStackNavigator = () => {
               headerLeft: () => (
                 <View style={styles.headerLeftContainer}>
                   <TouchableOpacity onPress={() => navigation.goBack()}>
-                    <IconArrowBackUp
-                      size={24}
-                      color={theme.colors.lightPurple}
-                    />
+                    <IconArrowBackUp size={30} color={theme.colors.lightPurple} />
+                  </TouchableOpacity>
+                </View>
+              ),
+              headerRight: () => (
+                <View style={styles.headerRightContainer}>
+                  <TouchableOpacity onPress={handleLogout}>
+                    <IconLogout size={30} color={theme.colors.lightPurple} />
                   </TouchableOpacity>
                 </View>
               ),
               headerStyle: {
                 backgroundColor: theme.colors.grayBackground,
                 height: 70,
+                shadowColor: 'transparent',
+                elevation: 0,
               },
               headerTitleStyle: {
                 fontFamily: theme.typography.fonts.bold,
@@ -176,11 +185,7 @@ const MainStackNavigator = () => {
           />
         </>
       ) : (
-        <Stack.Screen
-          name="SignIn"
-          component={SignInScreen}
-          options={{ headerShown: false }}
-        />
+        <Stack.Screen name="SignIn" component={SignInScreen} options={{ headerShown: false }} />
       )}
     </Stack.Navigator>
   )

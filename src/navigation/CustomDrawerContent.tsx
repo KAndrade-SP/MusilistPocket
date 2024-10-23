@@ -5,10 +5,13 @@ import {
   DrawerItemList,
 } from '@react-navigation/drawer'
 import { useTheme } from 'styled-components'
+import { useSelector } from 'react-redux'
+import { RootState } from '../redux/store'
 
 const CustomDrawerContent = (props: any) => {
   const theme = useTheme()
   const { navigation } = props
+  const { user } = useSelector((state: RootState) => state.auth)
 
   const styles = StyleSheet.create({
     container: {
@@ -17,6 +20,7 @@ const CustomDrawerContent = (props: any) => {
     header: {
       backgroundColor: theme.colors.darkBackground,
       padding: theme.spacing.md,
+      marginTop: -5,
       alignItems: 'flex-start',
     },
     userImage: {
@@ -48,11 +52,11 @@ const CustomDrawerContent = (props: any) => {
           }}
         >
           <Image
-            source={{ uri: 'https://via.placeholder.com/80' }}
+            source={{ uri: user?.photoURL || 'https://via.placeholder.com/80'}}
             style={styles.userImage}
           />
         </TouchableOpacity>
-        <Text style={styles.userName}>John Doe</Text>
+        <Text style={styles.userName}>{user?.displayName}</Text>
       </View>
 
       <View style={styles.body}>
