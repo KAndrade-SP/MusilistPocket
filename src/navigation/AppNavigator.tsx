@@ -54,7 +54,7 @@ const DrawerNavigator = () => {
       screenOptions={({ route }) => ({
         header: () => <Header />,
         drawerStyle: {
-          backgroundColor: theme.colors.grayBackground,
+          backgroundColor: theme.colors.darkBackground,
         },
         drawerActiveBackgroundColor: 'transparent',
         drawerActiveTintColor: theme.colors.lightPurple,
@@ -133,13 +133,13 @@ const MainStackNavigator = () => {
               title: 'Search',
               headerLeft: () => (
                 <View style={styles.headerLeftContainer}>
-                  <TouchableOpacity onPress={() => navigation.goBack()}>
-                    <IconArrowBackUp size={30} color={theme.colors.lightPurple} />
+                  <TouchableOpacity activeOpacity={0.5} onPress={() => navigation.goBack()}>
+                    <IconArrowBackUp size={30} color={theme.colors.textWhite} />
                   </TouchableOpacity>
                 </View>
               ),
               headerStyle: {
-                backgroundColor: theme.colors.grayBackground,
+                backgroundColor: theme.colors.purplePrimary,
                 height: 70,
                 shadowColor: 'transparent',
                 elevation: 0,
@@ -148,7 +148,7 @@ const MainStackNavigator = () => {
                 fontFamily: theme.typography.fonts.bold,
                 fontSize: theme.typography.fontSize.large,
               },
-              headerTintColor: theme.colors.lightPurple,
+              headerTintColor: theme.colors.textWhite,
             }}
           />
           <Stack.Screen
@@ -158,20 +158,20 @@ const MainStackNavigator = () => {
               title: 'Profile',
               headerLeft: () => (
                 <View style={styles.headerLeftContainer}>
-                  <TouchableOpacity onPress={() => navigation.goBack()}>
-                    <IconArrowBackUp size={30} color={theme.colors.lightPurple} />
+                  <TouchableOpacity activeOpacity={0.5} onPress={() => navigation.goBack()}>
+                    <IconArrowBackUp size={30} color={theme.colors.textWhite} />
                   </TouchableOpacity>
                 </View>
               ),
               headerRight: () => (
                 <View style={styles.headerRightContainer}>
-                  <TouchableOpacity onPress={handleLogout}>
-                    <IconLogout size={30} color={theme.colors.lightPurple} />
+                  <TouchableOpacity activeOpacity={0.5} onPress={handleLogout}>
+                    <IconLogout size={30} color={theme.colors.textWhite} />
                   </TouchableOpacity>
                 </View>
               ),
               headerStyle: {
-                backgroundColor: theme.colors.grayBackground,
+                backgroundColor: theme.colors.purplePrimary,
                 height: 70,
                 shadowColor: 'transparent',
                 elevation: 0,
@@ -180,7 +180,7 @@ const MainStackNavigator = () => {
                 fontFamily: theme.typography.fonts.bold,
                 fontSize: theme.typography.fontSize.large,
               },
-              headerTintColor: theme.colors.lightPurple,
+              headerTintColor: theme.colors.textWhite,
             }}
           />
         </>

@@ -11,7 +11,7 @@ const ProfileContainer = styled.View`
     justify-content: flex-start;
     gap: ${spacing.md}px;
     padding: ${spacing.xss}px ${spacing.md}px ${spacing.md}px;
-    background-color: ${colors.grayBackground};
+    background-color: ${colors.purplePrimary};
   `}
 `
 
@@ -31,7 +31,7 @@ const UserName = styled.Text`
 
 const ActivityArea = styled.View`
   ${({ theme: { colors, spacing } }) => `
-    background-color: ${colors.grayBackground};
+    background-color: ${colors.purplePrimary};
     padding: ${spacing.xss}px ${spacing.xss}px;
     box-shadow: 0 8px 8px rgba(0, 0, 0, 0.1);
   `}
@@ -72,7 +72,7 @@ const GenreOverviewArea = styled.View`
       padding: ${spacing.md}px;
       margin: 0 ${spacing.lg}px ${spacing.lg}px;
       border: solid 1px;
-      border-color: rgba(224, 192, 255, 0.5);
+      border-color: rgba(226, 194, 255, 1);
       box-shadow: 0 8px 8px rgba(0, 0, 0, 0.1);
   `}
 `
@@ -108,7 +108,7 @@ const ProfileScreen = () => {
   const styles = StyleSheet.create({
     profileScreen: {
       flex: 1,
-      backgroundColor: theme.colors.grayBackground,
+      backgroundColor: theme.colors.purplePrimary,
     },
     textGenre: {
       color: theme.colors.textWhite,

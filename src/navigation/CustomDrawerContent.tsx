@@ -18,7 +18,7 @@ const CustomDrawerContent = (props: any) => {
       flex: 1,
     },
     header: {
-      backgroundColor: theme.colors.darkBackground,
+      backgroundColor: theme.colors.purplePrimary,
       padding: theme.spacing.md,
       marginTop: -5,
       alignItems: 'flex-start',
@@ -47,6 +47,7 @@ const CustomDrawerContent = (props: any) => {
     >
       <View style={styles.header}>
         <TouchableOpacity
+          activeOpacity={0.7}
           onPress={() => {
             navigation.navigate('Profile')
           }}

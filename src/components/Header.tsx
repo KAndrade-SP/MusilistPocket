@@ -1,10 +1,6 @@
 import { DrawerNavigationProp } from '@react-navigation/drawer/lib/typescript/src/types'
 import { useFocusEffect, useNavigation } from '@react-navigation/native'
-import {
-  IconFilter,
-  IconMenuDeep,
-  IconMusicSearch,
-} from '@tabler/icons-react-native'
+import { IconFilter, IconMenuDeep, IconMusicSearch } from '@tabler/icons-react-native'
 import React, { useCallback, useState } from 'react'
 import { StyleSheet, TouchableOpacity, View } from 'react-native'
 import styled, { useTheme } from 'styled-components/native'
@@ -15,7 +11,7 @@ const HeaderContainer = styled.View`
     align-items: center;
     justify-content: space-between;
     padding: ${spacing.md}px;
-    background-color: ${colors.grayBackground};
+    background-color: ${colors.purplePrimary};
   `}
 `
 
@@ -23,7 +19,7 @@ const HeaderTitle = styled.Text`
   ${({ theme: { colors, typography } }) => `
     font-family: ${typography.fonts.bold};
     font-size: ${typography.fontSize.medium}px;
-    color: ${colors.lightPurple};
+    color: ${colors.textWhite};
   `}
 `
 
@@ -31,25 +27,25 @@ const HeaderSubtitle = styled.Text`
   ${({ theme: { colors, typography } }) => `
     font-family: ${typography.fonts.regular};
     font-size: ${typography.fontSize.small}px;
-    color: ${colors.textWhite};
+    color: ${colors.lightPurple};
   `}
 `
 
 const MenuIcon = styled(IconMenuDeep)`
   ${({ theme: { colors } }) => `
-    color: ${colors.lightPurple};
+    color: ${colors.textWhite};
   `}
 `
 
 const FilterIcon = styled(IconFilter)`
   ${({ theme: { colors } }) => `
-    color: ${colors.lightPurple};
+    color: ${colors.textWhite};
   `}
 `
 
 const SearchIcon = styled(IconMusicSearch)`
   ${({ theme: { colors } }) => `
-    color: ${colors.lightPurple};
+    color: ${colors.textWhite};
   `}
 `
 
@@ -62,8 +58,7 @@ const Header = () => {
 
   useFocusEffect(
     useCallback(() => {
-      const routeName =
-        navigation.getState().routes[navigation.getState().index].name
+      const routeName = navigation.getState().routes[navigation.getState().index].name
       setSubtitle(routeName)
     }, [navigation])
   )
@@ -87,8 +82,8 @@ const Header = () => {
   return (
     <HeaderContainer>
       <View style={styles.navContainer}>
-        <TouchableOpacity onPress={() => navigation.toggleDrawer()}>
-          <MenuIcon size={30}/>
+        <TouchableOpacity activeOpacity={0.5} onPress={() => navigation.toggleDrawer()}>
+          <MenuIcon size={30} />
         </TouchableOpacity>
         <View style={styles.titleContainer}>
           <HeaderTitle>Song list</HeaderTitle>
@@ -97,15 +92,16 @@ const Header = () => {
       </View>
 
       <View style={styles.iconContainer}>
-        <TouchableOpacity>
+        <TouchableOpacity activeOpacity={0.5}>
           <FilterIcon size={30} />
         </TouchableOpacity>
         <TouchableOpacity
+          activeOpacity={0.5}
           onPress={() => {
             navigation.navigate('Search')
           }}
         >
-          <SearchIcon size={30}/>
+          <SearchIcon size={30} />
         </TouchableOpacity>
       </View>
     </HeaderContainer>
